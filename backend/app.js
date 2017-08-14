@@ -22,6 +22,7 @@ dotenv.load({path: '.env'});
 
 // import routes below
 import index from './routes/index';
+import listings from './routes/listings';
 
 // init mongoose
 mongoose.Promise = global.Promise;
@@ -29,7 +30,7 @@ mongoose.connect(process.env.LOCALDB_URI);
 
 const app = express();
 const server = require('http').Server(app);
-const debug = Debug('node-plate:app');
+const debug = Debug('anothersprout:app');
 
 // Passport configuration
 // const passportConfig = require('./config/passport');
@@ -77,6 +78,7 @@ app.use(passport.session());
 
 // set routes
 app.use('/', index);
+app.use('/listings', listings);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
@@ -103,7 +105,7 @@ process.on('uncaughtException', (err) => {
 });
 
 // set port
-app.set('port', process.env.PORT || 3000);
+app.set('port', process.env.PORT || 3001);
 
 // Start express server
 server.listen(app.get('port'), () => {
